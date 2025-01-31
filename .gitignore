@@ -1,0 +1,44 @@
+# Build artifacts
+bin/
+obj/
+out/
+
+# Rider / VSCode / Visual Studio settings
+.vscode/
+.idea/
+*.suo
+*.user
+*.vs
+
+# Dependency cache
+.nuget/
+node_modules/
+packages/
+
+# Logs and database files
+*.log
+logs/
+database.mdf
+database.log
+
+# Entity Framework Migrations (optional, if regenerating often)
+Migrations/
+
+# Configuration files (sensitive data)
+appsettings.Development.json
+secrets.json
+.env
+
+# ASP.NET temporary files
+wwwroot/node_modules/
+wwwroot/lib/
+
+# JetBrains Rider / ReSharper
+.idea/
+*.sln.iml
+*.dotCover
+*_ReSharper.Caches
+
+# Docker files (if applicable)
+docker-compose.override.yml
+docker-compose.*
