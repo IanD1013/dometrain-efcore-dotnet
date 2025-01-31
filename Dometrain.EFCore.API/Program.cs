@@ -14,6 +14,12 @@ builder.Services.AddDbContext<MoviesContext>();
 
 var app = builder.Build();
 
+// DIRTY HACK, WILL COME BACK TO FIX THIS 
+var scope = app.Services.CreateScope();
+var context = scope.ServiceProvider.GetRequiredService<MoviesContext>();
+context.Database.EnsureDeleted();
+context.Database.EnsureCreated();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
