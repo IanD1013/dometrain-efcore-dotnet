@@ -40,19 +40,31 @@ public class MoviesController : Controller
         return movie == null ? NotFound() : Ok(movie);
     }
 
+    // [HttpGet("by-year/{year:int}")]
+    // [ProducesResponseType(typeof(List<Movie>), StatusCodes.Status200OK)]
+    // public async Task<IActionResult> GetAllByYear([FromRoute] int year)
+    // {
+    //     // IQueryable<Movie> allMovies = _context.Movies; // define a query but not executed
+    //     // IQueryable<Movie> filteredMovies = allMovies.Where(m => m.ReleaseDate.Year == year); // adds a filter on top of it but not executed
+    //     
+    //     var filteredMovies =
+    //         from movie in _context.Movies
+    //         where movie.ReleaseDate.Year == year
+    //         select movie;
+    //     
+    //     return Ok(await filteredMovies.ToListAsync()); // trigger database query
+    // }    
+    
     [HttpGet("by-year/{year:int}")]
     [ProducesResponseType(typeof(List<Movie>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllByYear([FromRoute] int year)
     {
-        // IQueryable<Movie> allMovies = _context.Movies; // define a query but not executed
-        // IQueryable<Movie> filteredMovies = allMovies.Where(m => m.ReleaseDate.Year == year); // adds a filter on top of it but not executed
+        var filteredTitles = await _context.Movies
+            .Where(movie => movie.ReleaseDate.Year == year)
+            .Select(movie => new MovieTitle { Id = movie.Id, Title = movie.Title }) 
+            .ToListAsync();
         
-        var filteredMovies =
-            from movie in _context.Movies
-            where movie.ReleaseDate.Year == year
-            select movie;
-        
-        return Ok(await filteredMovies.ToListAsync()); // trigger database query
+        return Ok(filteredTitles); 
     }
     
     [HttpPost]
