@@ -1,3 +1,4 @@
+using Dometrain.EFCore.API.Data.EntityMapping;
 using Dometrain.EFCore.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,8 +10,13 @@ public class MoviesContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=MoviesDB;User ID=sa;Password=MySaPassword123;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer("Data Source=127.0.0.1;Initial Catalog=MoviesDB;User Id=sa;Password=Wowship2020!;TrustServerCertificate=True");
         optionsBuilder.LogTo(Console.WriteLine);
         base.OnConfiguring(optionsBuilder);
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new MovieMapping());
     }
 }
