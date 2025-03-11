@@ -19,7 +19,7 @@ public class MovieMapping : IEntityTypeConfiguration<Movie>
             .IsRequired();
 
         builder.Property(movie => movie.ReleaseDate)
-            .HasColumnType("char(23)")
+            .HasColumnType("char(8)")
             .HasConversion(new DateTimeToChar8Convertor());
 
         builder.Property(movie => movie.Synopsis)
@@ -29,6 +29,16 @@ public class MovieMapping : IEntityTypeConfiguration<Movie>
         builder.Property(movie => movie.AgeRating)
             .HasColumnType("varchar(32)")
             .HasConversion<string>();
+
+        // builder.ComplexProperty(movie => movie.Director)
+        //     .Property(director => director.FirstName)
+        //     .HasColumnName("example");
+
+        builder.OwnsOne(movie => movie.Director)
+            .ToTable("Movie_Directors");
+
+        builder.OwnsMany(movie => movie.Actors)
+            .ToTable("Movie_Actors");
 
         builder
             .HasOne(movie => movie.Genre)
@@ -45,5 +55,15 @@ public class MovieMapping : IEntityTypeConfiguration<Movie>
             MainGenreId = 1,
             AgeRating = AgeRating.Adolescent
         });
+        
+        builder.OwnsOne(movie => movie.Director)
+            .HasData(new { MovieIdentifier = 1, FirstName = "David", LastName = "Fincher" });
+
+        builder.OwnsMany(movie => movie.Actors)
+            .HasData(
+                new { MovieIdentifier = 1, Id = 1, FirstName = "Edward", LastName = "Norton" },
+                new { MovieIdentifier = 1, Id = 2, FirstName = "Brad", LastName = "Pitt" }
+            );
+
     }
 }
