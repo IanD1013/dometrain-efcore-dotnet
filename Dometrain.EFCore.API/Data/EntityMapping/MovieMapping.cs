@@ -26,6 +26,10 @@ public class MovieMapping : IEntityTypeConfiguration<Movie>
             .HasColumnType("varchar(max)")
             .HasColumnName("Plot");
 
+        builder.Property(movie => movie.AgeRating)
+            .HasColumnType("varchar(32)")
+            .HasConversion<string>();
+
         builder
             .HasOne(movie => movie.Genre)
             .WithMany(genre => genre.Movies)
@@ -38,7 +42,8 @@ public class MovieMapping : IEntityTypeConfiguration<Movie>
             Title = "Fight Club",
             ReleaseDate = new DateTime(1999, 9, 10),
             Synopsis = "Ed Norton and Brad Pitt have a couple of fist fights with each other.",
-            MainGenreId = 1
+            MainGenreId = 1,
+            AgeRating = AgeRating.Adolescent
         });
     }
 }
