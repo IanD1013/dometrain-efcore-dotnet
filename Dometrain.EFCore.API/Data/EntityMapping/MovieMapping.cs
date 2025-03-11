@@ -18,7 +18,8 @@ public class MovieMapping : IEntityTypeConfiguration<Movie>
             .IsRequired();
 
         builder.Property(movie => movie.ReleaseDate)
-            .HasColumnType("date");
+            .HasColumnType("char(23)")
+            .HasConversion<string>();
 
         builder.Property(movie => movie.Synopsis)
             .HasColumnType("varchar(max)")
