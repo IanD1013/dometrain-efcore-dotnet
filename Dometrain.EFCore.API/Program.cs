@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Dometrain.EFCore.API.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,10 +20,12 @@ builder.Services.AddDbContext<MoviesContext>();
 
 var app = builder.Build();
 
-// DIRTY HACK, WILL COME BACK TO FIX THIS 
+// 
 var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<MoviesContext>();
-context.Database.EnsureDeleted();
+var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+if (pendingMigrations.Count() > 0)
+    throw new Exception("Database is not fully migrated for MoviesContext.");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
