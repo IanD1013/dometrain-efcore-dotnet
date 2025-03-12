@@ -23,7 +23,6 @@ var app = builder.Build();
 var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<MoviesContext>();
 context.Database.EnsureDeleted();
-context.Database.EnsureCreated();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

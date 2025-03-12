@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace Dometrain.EFCore.API.Migrations
 {
     /// <inheritdoc />
@@ -37,6 +35,7 @@ namespace Dometrain.EFCore.API.Migrations
                     ReleaseDate = table.Column<string>(type: "char(8)", nullable: false),
                     Plot = table.Column<string>(type: "varchar(max)", nullable: true),
                     AgeRating = table.Column<string>(type: "varchar(32)", nullable: false),
+                    ImdbRating = table.Column<int>(type: "int", nullable: false),
                     MainGenreId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -89,25 +88,6 @@ namespace Dometrain.EFCore.API.Migrations
                         principalColumn: "Identifier",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.InsertData(
-                table: "Pictures",
-                columns: new[] { "Identifier", "AgeRating", "MainGenreId", "ReleaseDate", "Plot", "Title" },
-                values: new object[] { 1, "Adolescent", 1, "19990910", "Ed Norton and Brad Pitt have a couple of fist fights with each other.", "Fight Club" });
-
-            migrationBuilder.InsertData(
-                table: "Movie_Actors",
-                columns: new[] { "Id", "MovieIdentifier", "FirstName", "LastName" },
-                values: new object[,]
-                {
-                    { 1, 1, "Edward", "Norton" },
-                    { 2, 1, "Brad", "Pitt" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Movie_Directors",
-                columns: new[] { "MovieIdentifier", "FirstName", "LastName" },
-                values: new object[] { 1, "David", "Fincher" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pictures_MainGenreId",

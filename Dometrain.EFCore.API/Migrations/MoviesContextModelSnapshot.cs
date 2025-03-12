@@ -79,18 +79,6 @@ namespace Dometrain.EFCore.API.Migrations
                     b.HasIndex("MainGenreId");
 
                     b.ToTable("Pictures", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Identifier = 1,
-                            AgeRating = "Adolescent",
-                            ImdbRating = 0,
-                            MainGenreId = 1,
-                            ReleaseDate = "19990910",
-                            Synopsis = "Ed Norton and Brad Pitt have a couple of fist fights with each other.",
-                            Title = "Fight Club"
-                        });
                 });
 
             modelBuilder.Entity("Dometrain.EFCore.API.Models.Movie", b =>
@@ -124,22 +112,6 @@ namespace Dometrain.EFCore.API.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("MovieIdentifier");
-
-                            b1.HasData(
-                                new
-                                {
-                                    MovieIdentifier = 1,
-                                    Id = 1,
-                                    FirstName = "Edward",
-                                    LastName = "Norton"
-                                },
-                                new
-                                {
-                                    MovieIdentifier = 1,
-                                    Id = 2,
-                                    FirstName = "Brad",
-                                    LastName = "Pitt"
-                                });
                         });
 
                     b.OwnsOne("Dometrain.EFCore.API.Models.Person", "Director", b1 =>
@@ -159,14 +131,6 @@ namespace Dometrain.EFCore.API.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("MovieIdentifier");
-
-                            b1.HasData(
-                                new
-                                {
-                                    MovieIdentifier = 1,
-                                    FirstName = "David",
-                                    LastName = "Fincher"
-                                });
                         });
 
                     b.Navigation("Actors");
