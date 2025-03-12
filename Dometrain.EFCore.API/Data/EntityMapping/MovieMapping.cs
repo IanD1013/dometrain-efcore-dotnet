@@ -19,7 +19,7 @@ public class MovieMapping : IEntityTypeConfiguration<Movie>
             .HasMaxLength(128)
             .IsRequired();
 
-        builder.Property(movie => movie.ReleaseDate)
+        builder.Property(movie => movie.ReleaseDate) 
             .HasColumnType("char(8)")
             .HasConversion(new DateTimeToChar8Convertor());
 
