@@ -22,7 +22,6 @@ database.mdf
 database.log
 
 # Entity Framework Migrations (optional, if regenerating often)
-Migrations/
 
 # Configuration files (sensitive data)
 appsettings.Development.json
