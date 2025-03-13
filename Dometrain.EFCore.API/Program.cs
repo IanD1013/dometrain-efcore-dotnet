@@ -18,7 +18,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IGenreRepository, GenreRepository>();
 
 // Add a DbContext here
-builder.Services.AddDbContext<MoviesContext>();
+builder.Services.AddDbContext<MoviesContext>(optionsBuilder =>
+    {
+        var connectionString = builder.Configuration.GetConnectionString("MoviesContext");
+        optionsBuilder
+            .UseSqlServer(connectionString)
+            .LogTo(Console.WriteLine);
+    },
+    ServiceLifetime.Scoped,
+    ServiceLifetime.Singleton);
 
 var app = builder.Build();
 

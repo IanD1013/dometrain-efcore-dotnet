@@ -8,15 +8,8 @@ public class MoviesContext : DbContext
 {
     public DbSet<Movie> Movies => Set<Movie>();
     public DbSet<Genre> Genres => Set<Genre>();
-    
-    public MoviesContext(DbContextOptions<MoviesContext> options) : base(options) {}
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        // optionsBuilder.UseSqlServer("Data Source=127.0.0.1;Initial Catalog=MoviesDB;User Id=sa;Password=Wowship2020!;TrustServerCertificate=True");
-        optionsBuilder.LogTo(Console.WriteLine);
-        base.OnConfiguring(optionsBuilder);
-    }
+    public MoviesContext(DbContextOptions<MoviesContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
