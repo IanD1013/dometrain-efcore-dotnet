@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dometrain.EFCore.API", "Dometrain.EFCore.API\Dometrain.EFCore.API.csproj", "{2B791243-64DA-4FF0-8992-9FDD1A58C909}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dometrain.EFCore.Tests", "Dometrain.EFCore.Tests\Dometrain.EFCore.Tests.csproj", "{4BFD810F-A567-4007-A0A0-8C8DB5AB24BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{2B791243-64DA-4FF0-8992-9FDD1A58C909}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B791243-64DA-4FF0-8992-9FDD1A58C909}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B791243-64DA-4FF0-8992-9FDD1A58C909}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BFD810F-A567-4007-A0A0-8C8DB5AB24BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BFD810F-A567-4007-A0A0-8C8DB5AB24BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BFD810F-A567-4007-A0A0-8C8DB5AB24BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BFD810F-A567-4007-A0A0-8C8DB5AB24BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
