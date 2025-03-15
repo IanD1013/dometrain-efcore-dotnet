@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Dometrain.EFCore.API.Data;
 using Dometrain.EfCore.API.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,14 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
+
+// Configure Serilog
+var serilog = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+// Configure it for Microsoft.Extensions.Logging
+builder.Services.AddSerilog(serilog);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -22,20 +31,23 @@ builder.Services.AddDbContext<MoviesContext>(optionsBuilder =>
     {
         var connectionString = builder.Configuration.GetConnectionString("MoviesContext");
         optionsBuilder
-            .UseSqlServer(connectionString)
-            .LogTo(Console.WriteLine);
+            .UseSqlServer(connectionString);
+        // .EnableSensitiveDataLogging()
+        // .LogTo(Console.WriteLine);
     },
     ServiceLifetime.Scoped,
     ServiceLifetime.Singleton);
 
 var app = builder.Build();
 
-// 
-var scope = app.Services.CreateScope();
-var context = scope.ServiceProvider.GetRequiredService<MoviesContext>();
-var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
-if (pendingMigrations.Count() > 0)
-    throw new Exception("Database is not fully migrated for MoviesContext.");
+// Check if the DB was migrated
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<MoviesContext>();
+    var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+    if (pendingMigrations.Any())
+        throw new Exception("Database is not fully migrated for MoviesContext.");
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
