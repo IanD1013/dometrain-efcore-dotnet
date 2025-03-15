@@ -38,6 +38,12 @@ builder.Services.AddDbContext<MoviesContext>(optionsBuilder =>
     ServiceLifetime.Scoped,
     ServiceLifetime.Singleton);
 
+// builder.Services.AddDbContextPool<MoviesContext>(optionsBuilder =>
+//     {
+//         var connectionString = builder.Configuration.GetConnectionString("MoviesContext");
+//         optionsBuilder.UseSqlServer(connectionString);
+//     });
+
 var app = builder.Build();
 
 // Check if the DB was migrated
