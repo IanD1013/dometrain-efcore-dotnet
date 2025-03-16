@@ -11,6 +11,8 @@ public abstract class Movie
 
     public Genre Genre { get; set; }
     public string MainGenreName { get; set; }
+
+    public ExternalInformation? ExternalInformation { get; set; }
 }
 
 public class CinemaMovie : Movie
