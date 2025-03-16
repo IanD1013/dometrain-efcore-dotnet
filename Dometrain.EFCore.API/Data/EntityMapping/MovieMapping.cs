@@ -35,16 +35,30 @@ public class MovieMapping : IEntityTypeConfiguration<Movie>
         //     .Property(director => director.FirstName)
         //     .HasColumnName("example");
 
-        builder.OwnsOne(movie => movie.Director)
-            .ToTable("Movie_Directors");
-
-        builder.OwnsMany(movie => movie.Actors)
-            .ToTable("Movie_Actors");
+        // builder.OwnsOne(movie => movie.Director)
+        //     .ToTable("Movie_Directors");
+        //
+        // builder.OwnsMany(movie => movie.Actors)
+        //     .ToTable("Movie_Actors");
 
         builder
             .HasOne(movie => movie.Genre)
             .WithMany(genre => genre.Movies)
             .HasPrincipalKey(genre => genre.Id)
             .HasForeignKey(movie => movie.MainGenreId);
+    }
+}
+
+public class CinemaMovieMapping : IEntityTypeConfiguration<CinemaMovie>
+{
+    public void Configure(EntityTypeBuilder<CinemaMovie> builder)
+    {
+    }
+}
+
+public class TelevisionMovieMapping : IEntityTypeConfiguration<TelevisionMovie>
+{
+    public void Configure(EntityTypeBuilder<TelevisionMovie> builder)
+    {
     }
 }
