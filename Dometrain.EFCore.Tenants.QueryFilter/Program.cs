@@ -25,6 +25,19 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<TenantService>();
 
+// // Add a DbContext here
+// builder.Services.AddDbContext<MoviesContext>((services, options) =>
+// {
+//     var tenantService = services.GetRequiredService<TenantService>();
+//     var configuration = services.GetRequiredService<IConfiguration>();
+//     var connectionString = configuration
+//         .GetConnectionString($"MoviesContext_{tenantService.GetTenantId()}");
+//
+//     options.UseSqlServer(connectionString)
+//            .LogTo(Console.WriteLine);
+// });
+
+
 // Add a DbContext here
 builder.Services.AddDbContextFactory<MoviesContext>(opt =>
 {
