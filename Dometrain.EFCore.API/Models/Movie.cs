@@ -10,7 +10,7 @@ public abstract class Movie
     public int ImdbRating { get; set; }
 
     public Genre Genre { get; set; }
-    public int MainGenreId { get; set; }
+    public string MainGenreName { get; set; }
 }
 
 public class CinemaMovie : Movie
