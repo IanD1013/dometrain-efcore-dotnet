@@ -10,8 +10,7 @@ public class MovieMapping : IEntityTypeConfiguration<Movie>
     public void Configure(EntityTypeBuilder<Movie> builder)
     {
         builder
-            .ToTable("Pictures")
-            .UseTptMappingStrategy()
+            .UseTpcMappingStrategy()
             .HasQueryFilter(movie => movie.ReleaseDate >= new DateTime(2000, 1, 1))
             .HasKey(movie => movie.Identifier);
         
