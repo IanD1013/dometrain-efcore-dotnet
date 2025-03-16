@@ -9,6 +9,7 @@ public class MoviesContext : DbContext
     public DbSet<Movie> Movies => Set<Movie>();
     public DbSet<ExternalInformation> ExternalInformations => Set<ExternalInformation>();
     public DbSet<Genre> Genres => Set<Genre>();
+    public DbSet<Actor> Actors => Set<Actor>();
 
     public MoviesContext(DbContextOptions<MoviesContext> options) : base(options) {}
 
@@ -19,5 +20,6 @@ public class MoviesContext : DbContext
         modelBuilder.ApplyConfiguration(new CinemaMovieMapping());
         modelBuilder.ApplyConfiguration(new TelevisionMovieMapping());
         modelBuilder.ApplyConfiguration(new ExternalInformationMapping());
+        modelBuilder.ApplyConfiguration(new ActorMapping());
     }
 }
