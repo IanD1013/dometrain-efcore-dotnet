@@ -20,6 +20,13 @@ public class GenresWithRepositoryController : Controller
     {
         return Ok(await _repository.GetAll());
     }
+    
+    [HttpGet("from-query")]
+    [ProducesResponseType(typeof(IEnumerable<Genre>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAllFromQuery()
+    {
+        return Ok(await _repository.GetAllFromQuery());
+    }
 
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]
