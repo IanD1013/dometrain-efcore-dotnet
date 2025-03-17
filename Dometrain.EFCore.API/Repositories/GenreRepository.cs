@@ -81,4 +81,13 @@ public class GenreRepository: IGenreRepository
 
         return genres;
     }
+
+    public async Task<IEnumerable<GenreName>> GetNames()
+    {
+        var names = await _context.Database
+            .SqlQuery<GenreName>($"SELECT Name FROM dbo.Genres")
+            .ToListAsync();
+
+        return names;
+    }
 }
