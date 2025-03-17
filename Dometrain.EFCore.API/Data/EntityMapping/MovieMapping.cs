@@ -12,10 +12,16 @@ public class MovieMapping : IEntityTypeConfiguration<Movie>
         builder
             .UseTpcMappingStrategy()
             .HasQueryFilter(movie => movie.ReleaseDate >= new DateTime(2000, 1, 1))
-            .HasKey(movie => movie.Identifier);
+            .HasKey(movie => movie.Identifier)
+            .IsClustered(false);
         
         builder
-            .HasAlternateKey(movie => new {movie.Title, movie.ReleaseDate});
+            .HasAlternateKey(movie => new {movie.Title, movie.ReleaseDate})
+            .IsClustered(true);
+        
+        // Add another index:
+        builder.HasIndex(movie => movie.AgeRating)
+            .IsDescending();
         
         builder.Property(movie => movie.Title)
             .HasColumnType("varchar")
