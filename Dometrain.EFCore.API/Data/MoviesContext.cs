@@ -1,4 +1,5 @@
 using Dometrain.EFCore.API.Data.EntityMapping;
+using Dometrain.EFCore.API.Data.Interceptors;
 using Dometrain.EFCore.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,5 +22,10 @@ public class MoviesContext : DbContext
         modelBuilder.ApplyConfiguration(new TelevisionMovieMapping());
         modelBuilder.ApplyConfiguration(new ExternalInformationMapping());
         modelBuilder.ApplyConfiguration(new ActorMapping());
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.AddInterceptors(new SaveChangesInterceptor());
     }
 }
