@@ -24,10 +24,7 @@ public class MoviesController : Controller
 
         foreach (var televisionMovie in movies.OfType<TelevisionMovie>())
         {
-            
-            await _context.Entry(televisionMovie)
-                .Collection(movie => movie.Actors)
-                .LoadAsync();  
+            // var actors = televisionMovie.Actors;
         }
         
         return Ok(movies);

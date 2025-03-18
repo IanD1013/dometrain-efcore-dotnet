@@ -37,6 +37,7 @@ builder.Services.AddDbContext<MoviesContext>(optionsBuilder =>
         var connectionString = builder.Configuration.GetConnectionString("MoviesContext");
         optionsBuilder
             .UseSqlServer(connectionString, sqlBuilder => sqlBuilder.MaxBatchSize(2));
+            // .UseLazyLoadingProxies();
         // .EnableSensitiveDataLogging()
         // .LogTo(Console.WriteLine);
     },
