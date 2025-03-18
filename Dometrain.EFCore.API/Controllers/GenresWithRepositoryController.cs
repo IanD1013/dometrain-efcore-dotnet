@@ -1,5 +1,6 @@
 ﻿using Dometrain.EFCore.API.Models;
 using Dometrain.EfCore.API.Repositories;
+using Dometrain.EFCore.API.Services;
 using Microsoft.AspNetCore.Mvc;
 namespace Dometrain.EFCore.API.Controllers;
 
@@ -8,10 +9,12 @@ namespace Dometrain.EFCore.API.Controllers;
 public class GenresWithRepositoryController : Controller
 {
     private readonly IGenreRepository _repository;
+    private readonly IBatchGenreService _batchService;
 
-    public GenresWithRepositoryController(IGenreRepository repository)
+    public GenresWithRepositoryController(IGenreRepository repository, IBatchGenreService batchService)
     {
         _repository = repository;
+        _batchService = batchService;
     }
     
     [HttpGet]
@@ -48,6 +51,25 @@ public class GenresWithRepositoryController : Controller
 
         return CreatedAtAction(nameof(Get), new { id = createdGenre.Id }, createdGenre);
     }
+    
+    [HttpPost("batch")]
+    [ProducesResponseType(typeof(IEnumerable<Genre>), StatusCodes.Status201Created)]
+    public async Task<IActionResult> CreateAll([FromBody] List<Genre> genres)
+    {
+        var response = await _batchService.CreateGenres(genres);
+
+        return CreatedAtAction(nameof(GetAll), new { }, response);
+    }
+
+    [HttpPut("batch-update")]
+    [ProducesResponseType(typeof(IEnumerable<Genre>), StatusCodes.Status201Created)]
+    public async Task<IActionResult> UpdateAll([FromBody] List<Genre> genres)
+    {
+        var response = await _batchService.UpdateGenres(genres);
+
+        return CreatedAtAction(nameof(GetAll), new { }, response);
+    }
+
     
     [HttpPut("{id:int}")]
     [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]

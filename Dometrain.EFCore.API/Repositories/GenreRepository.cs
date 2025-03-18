@@ -7,6 +7,7 @@ namespace Dometrain.EfCore.API.Repositories;
 public interface IGenreRepository
 {
     Task<IEnumerable<Genre>> GetAll();
+    Task<IEnumerable<Genre>> GetAll(IEnumerable<int> genreIds);
     Task<Genre?> Get(int id);
     Task<Genre> Create(Genre genre);
     Task<Genre?> Update(int id, Genre genre);
@@ -17,15 +18,24 @@ public interface IGenreRepository
 public class GenreRepository: IGenreRepository
 {
     private readonly MoviesContext _context;
+    private readonly IUnitOfWorkManager _uowManager;
 
-    public GenreRepository(MoviesContext context)
+    public GenreRepository(MoviesContext context, IUnitOfWorkManager uowManager)
     {
         _context = context;
+        _uowManager = uowManager;
     }
     
     public async Task<IEnumerable<Genre>> GetAll()
     {
         return await _context.Genres.ToListAsync();
+    }
+    
+    public async Task<IEnumerable<Genre>> GetAll(IEnumerable<int> genreIds)
+    {
+        return await _context.Genres
+            .Where(genre => genreIds.Contains(genre.Id))
+            .ToListAsync();
     }
 
     public async Task<Genre?> Get(int id)
@@ -36,8 +46,9 @@ public class GenreRepository: IGenreRepository
     public async Task<Genre> Create(Genre genre)
     {
         await _context.Genres.AddAsync(genre);
-        
-        await _context.SaveChangesAsync();
+
+        if(!_uowManager.IsUnitOfWorkStarted)
+            await _context.SaveChangesAsync();
 
         return genre;
     }
@@ -51,7 +62,8 @@ public class GenreRepository: IGenreRepository
 
         existingGenre.Name = genre.Name;
 
-        await _context.SaveChangesAsync();
+        if(!_uowManager.IsUnitOfWorkStarted)
+            await _context.SaveChangesAsync();
 
         return existingGenre;
     }
@@ -65,7 +77,9 @@ public class GenreRepository: IGenreRepository
 
         _context.Genres.Remove(existingGenre);
 
-        await _context.SaveChangesAsync();
+        if(!_uowManager.IsUnitOfWorkStarted)
+            await _context.SaveChangesAsync();
+
         return true;
     }
     

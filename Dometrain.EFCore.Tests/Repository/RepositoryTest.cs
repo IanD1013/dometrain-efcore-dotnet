@@ -17,7 +17,7 @@ public class RepositoryTest
         // Arrange
         var repository = Substitute.For<IGenreRepository>();
         repository.Get(2)!.Returns(Task.FromResult(new Genre { Id = 2, Name = "Action" }));
-        var controller = new GenresWithRepositoryController(repository);
+        var controller = new GenresWithRepositoryController(repository, null);
         
         // Act
         var response = await controller.Get(2);

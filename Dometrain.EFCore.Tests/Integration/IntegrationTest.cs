@@ -38,7 +38,7 @@ public class IntegrationTest
     public async Task WhenGenreCreated_GenreIsInDatabase()
     {
         // Arrange
-        var repository = new GenreRepository(_testContext);
+        var repository = new GenreRepository(_testContext, null);
         
         // Act
         var genreToCreate = new Genre { Name = "MyAwesomeGenre" };
