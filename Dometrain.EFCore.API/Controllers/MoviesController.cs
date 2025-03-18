@@ -20,7 +20,11 @@ public class MoviesController : Controller
     [ProducesResponseType(typeof(List<Movie>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
-        return Ok(await _context.Movies.ToListAsync());
+        var movies = await _context.Movies
+            .Include(movie => movie.Actors)
+            .ToListAsync();
+        
+        return Ok(movies);
     }
 
     [HttpGet("{id:int}")]
