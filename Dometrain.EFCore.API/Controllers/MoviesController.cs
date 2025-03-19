@@ -20,13 +20,9 @@ public class MoviesController : Controller
     [ProducesResponseType(typeof(List<Movie>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
-        var movies = await _context.Movies.ToListAsync();
-
-        foreach (var televisionMovie in movies.OfType<TelevisionMovie>())
-        {
-            // var actors = televisionMovie.Actors;
-        }
-        
+        var movies = await _context.Movies
+            .AsNoTracking()
+            .ToListAsync();
         return Ok(movies);
     }
 
